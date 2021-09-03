@@ -4,15 +4,15 @@ using System.Linq;
 using System.Web;
 using LinePutScript;
 using LinePutScript.SQLHelper;
-using static Software_Version_Manager.Function;
+using static SoftwareVersionManager.Function;
 
-namespace Software_Version_Manager
+namespace SoftwareVersionManager
 {
     //激活码表格式:
     //   -activecode
-    //     code(int64)|software(string64)|Verizon(int32)|Uid(int)|Expiration(datetime)|times(short)|describe(text)|remarks(text)|headport(text)|
-    //      激活码     | 可以激活的软件名  | 可激活版本   | 用户id  |      失效日期      | 可以激活次数|   描述       |备注(给管理员)| 已激活电脑     |
-    //     随机数      |------------------| -1为不限版本 |-1未绑定 |      2099-1-1     |       5     |     空       |    空      |        空     |
+    //     code(int64)|software(string64)|verison(int32)|Uid(int)|Expiration(datetime)|times(short)|illustration(text)|remarks(text)|Activated(text)|
+    //      激活码     | 可以激活的软件名  | 可激活版本   | 用户id  |      失效日期      | 可以激活次数|       描述       |备注(给管理员)| 已激活电脑     |
+    //      随机数     |------------------| -1为不限版本 |-1未绑定 |      9999-12-30   |       5     |         空       |    空       |        空     |
     public class ActivationCode
     {
         #region "辅助构建函数"
@@ -59,7 +59,7 @@ namespace Software_Version_Manager
         /// <summary>
         /// 创建新激活码
         /// </summary>
-        public static ActivationCode CreatActivationCode(string software, int verizon = -1, int uid = -1, DateTime expiration = default, short times = 5, string describe = "", string remarks = "", string headport = "")
+        public static ActivationCode CreatActivationCode(string software, int verison = -1, int uid = -1, DateTime expiration = default, short times = 5, string illustration = "", string remarks = "", string headport = "")
         {
             long rndkey = RndLong();
             while (GetActivationCode(rndkey) != null)//确保没有重复的key
@@ -67,9 +67,9 @@ namespace Software_Version_Manager
             if (expiration == default)
                 expiration = DateTime.MaxValue;//9999年12月31日
 
-            RAW.ExecuteNonQuery($"INSERT INTO activecode VALUES (@code,@sw,@vz,@uid,@exp,@tm,@ds,@rm,@hp)", new MySQLHelper.Parameter("code", rndkey), new MySQLHelper.Parameter("sw", software),
-                new MySQLHelper.Parameter("vz", verizon), new MySQLHelper.Parameter("uid", uid), new MySQLHelper.Parameter("exp", expiration), new MySQLHelper.Parameter("tm", times),
-                new MySQLHelper.Parameter("ds", describe), new MySQLHelper.Parameter("rm", remarks), new MySQLHelper.Parameter("hp", headport));
+            RAW.ExecuteNonQuery($"INSERT INTO activecode VALUES (@code,@sw,@vs,@uid,@exp,@tm,@ds,@rm,@hp)", new MySQLHelper.Parameter("code", rndkey), new MySQLHelper.Parameter("sw", software),
+                new MySQLHelper.Parameter("vs", verison), new MySQLHelper.Parameter("uid", uid), new MySQLHelper.Parameter("exp", expiration), new MySQLHelper.Parameter("tm", times),
+                new MySQLHelper.Parameter("ds", illustration), new MySQLHelper.Parameter("rm", remarks), new MySQLHelper.Parameter("hp", headport));
             return GetActivationCode(rndkey);
         }
         #endregion
@@ -108,9 +108,163 @@ namespace Software_Version_Manager
         /// </summary>
         public readonly string CodeHEX;
 
-
-
-
+        /// <summary>
+        /// 软件名称
+        /// </summary>
+        public string Software
+        {
+            get
+            {
+                return DataBuff.Find("software").Info;
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET software=@value WHERE code=@code", new MySQLHelper.Parameter("value", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 可激活版本
+        /// </summary>
+        public int Verison
+        {
+            get
+            {
+                return DataBuff.Find("verison").InfoToInt;
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET verison=@value WHERE code=@code", new MySQLHelper.Parameter("value", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 可激活版本
+        /// </summary>
+        public int Uid
+        {
+            get
+            {
+                return DataBuff.Find("uid").InfoToInt;
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET uid=@value WHERE code=@code", new MySQLHelper.Parameter("value", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 失效日期
+        /// </summary>
+        public DateTime Expiration
+        {
+            get
+            {
+                return Convert.ToDateTime(DataBuff.Find("expiration").Info);
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET expiration=@date WHERE code=@code", new MySQLHelper.Parameter("date", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 可以激活次数
+        /// </summary>
+        public short Times
+        {
+            get
+            {
+                return (short)DataBuff.Find("times").InfoToInt;
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET times=@value WHERE code=@code", new MySQLHelper.Parameter("value", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 描述 给用户看的描述
+        /// </summary>
+        public string Illustration
+        {
+            get
+            {
+                return DataBuff.Find("illustration").Info;
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET illustration=@value WHERE code=@code", new MySQLHelper.Parameter("value", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 备注 给管理员或者软件设置的备注
+        /// </summary>
+        public string Remarks
+        {
+            get
+            {
+                return DataBuff.Find("remarks").Info;
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET remarks=@value WHERE code=@code", new MySQLHelper.Parameter("value", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 已激活电脑原数据
+        /// </summary>
+        public string Activated
+        {
+            get
+            {
+                return DataBuff.Find("activated").Info;
+            }
+            set
+            {
+                databf = null;
+                RAW.ExecuteNonQuery($"UPDATE activecode SET activated=@value WHERE code=@code", new MySQLHelper.Parameter("value", value), new MySQLHelper.Parameter("code", Code));
+            }
+        }
+        /// <summary>
+        /// 已激活电脑个数
+        /// </summary>
+        public int ActivatedNumber
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(Activated))
+                    return 0;
+                return Activated.Split(',').Length;
+            }
+        }
+        /// <summary>
+        /// 添加激活电脑
+        /// </summary>
+        /// <param name="computer">电脑唯一id,一般是一串HEX由电脑硬件计算而来</param>
+        public void ActivatedADD(string computer)
+        {
+            if (string.IsNullOrEmpty(Activated))
+                Activated = computer;
+            else
+                Activated += ',' + computer;
+        }
+        /// <summary>
+        /// 判断是否已经激活过这台电脑
+        /// </summary>
+        /// <param name="computer">电脑唯一id,一般是一串HEX由电脑硬件计算而来</param>
+        public bool ActivatedHave(string computer) => Activated.Contains(computer);
+        /// <summary>
+        /// 移除激活电脑
+        /// </summary>
+        /// <param name="computer">电脑唯一id,一般是一串HEX由电脑硬件计算而来</param>
+        public void ActivatedRemove(string computer)
+        {
+            if (!string.IsNullOrEmpty(Activated))
+                Activated = Activated.Replace(computer,"").Replace(",,",",").Trim(',');
+        }
 
         #region 构造函数
         public ActivationCode(long code)

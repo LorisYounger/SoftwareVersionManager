@@ -31,7 +31,7 @@ Software Version Manager
 
 ## 使用&部署
 
-### Software_Verison_Manager
+### SoftwareVerisonManager
 
 Software Version Manager 暂时未开发完毕 不推荐进行部署 (虽然说你也可以自己改了直接发)
 

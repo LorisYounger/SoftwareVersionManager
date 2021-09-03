@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Activation.ashx.cs" Class="Software_Version_Manager.Activation" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Activation.ashx.cs" Class="SoftwareVersionManager.Activation" %>

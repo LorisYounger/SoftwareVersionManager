@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using static Software_Version_Manager.Function;
+using static SoftwareVersionManager.Function;
 
-namespace Software_Version_Manager
+namespace SoftwareVersionManager
 {
     /// <summary>
     /// 软件版本管理器控制台 包括版本和验证

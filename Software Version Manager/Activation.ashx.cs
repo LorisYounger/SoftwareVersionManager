@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Software_Version_Manager
+namespace SoftwareVersionManager
 {
     /// <summary>
     /// 软件激活和校验

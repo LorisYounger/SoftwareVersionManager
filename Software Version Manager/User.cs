@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using LinePutScript;
 using LinePutScript.SQLHelper;
-using static Software_Version_Manager.Function;
+using static SoftwareVersionManager.Function;
 
-namespace Software_Version_Manager
+namespace SoftwareVersionManager
 {
     //用户表使用的是wwcms同款用户表,可以与wwcms兼容
     //用户表格式:
