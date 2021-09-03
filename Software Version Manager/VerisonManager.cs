@@ -30,10 +30,10 @@ namespace SoftwareVersionManager
         /// 通过软件名称获得版本信息
         /// </summary>
         /// <param name="software">软件名称</param>
-        public static List<VerisonManager> GetVerisonManager(string software)
+        public static List<VerisonManager> GetVerisonManager(string software, string orderby = "ver")
         {
             List<VerisonManager> list = new List<VerisonManager>();
-            LpsDocument data = RAW.ExecuteQuery("SELECT * FROM verisonmanager WHERE software=@software", new MySQLHelper.Parameter("software", software));
+            LpsDocument data = RAW.ExecuteQuery("SELECT * FROM verisonmanager WHERE software=@software ORDER BY @orderby DESC", new MySQLHelper.Parameter("software", software), new MySQLHelper.Parameter("orderby", orderby));
             foreach (Line line in data.Assemblage)
             {
                 list.Add(new VerisonManager(line.InfoToInt, line));

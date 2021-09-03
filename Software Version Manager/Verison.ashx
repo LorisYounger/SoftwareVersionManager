@@ -1,1 +1,1 @@
-﻿<%@ WebHandler Language="C#" CodeBehind="Verison.ashx.cs" Class="SoftwareVersionManager.Verizon" %>
+﻿<%@ WebHandler Language="C#" CodeBehind="Verison.ashx.cs" Class="SoftwareVersionManager.Verison" %>
