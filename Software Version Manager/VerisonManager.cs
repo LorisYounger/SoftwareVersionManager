@@ -4,9 +4,9 @@ using System.Linq;
 using System.Web;
 using LinePutScript;
 using LinePutScript.SQLHelper;
-using static SoftwareVersionManager.Function;
+using static SoftwareVersion.Manager.Function;
 
-namespace SoftwareVersionManager
+namespace SoftwareVersion.Manager
 {
     //版本码表格式:
     //   -verisonmanager
@@ -33,7 +33,7 @@ namespace SoftwareVersionManager
         public static List<VerisonManager> GetVerisonManager(string software, string orderby = "ver")
         {
             List<VerisonManager> list = new List<VerisonManager>();
-            LpsDocument data = RAW.ExecuteQuery("SELECT * FROM verisonmanager WHERE software=@software ORDER BY @orderby DESC", new MySQLHelper.Parameter("software", software), new MySQLHelper.Parameter("orderby", orderby));
+            LpsDocument data = RAW.ExecuteQuery("SELECT * FROM verisonmanager WHERE software=@software ORDER BY " + orderby + " DESC", new MySQLHelper.Parameter("software", software));
             foreach (Line line in data.Assemblage)
             {
                 list.Add(new VerisonManager(line.InfoToInt, line));

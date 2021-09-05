@@ -8,7 +8,7 @@ using LinePutScript.SQLHelper;
 using System.Configuration;
 using LinePutScript;
 
-namespace SoftwareVersionManager
+namespace SoftwareVersion.Manager
 {
     public static class Function
     {

@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SoftwareVersionManager
+namespace SoftwareVersion.Manager
 {
 
 
