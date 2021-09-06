@@ -33,9 +33,9 @@ namespace SoftwareVersion.Manager
             }
 
             CalloginKey.Text = qus;
-            switch (Request.QueryString["Action"])
-            {
-                case "Register":
+            if (Session["User"] == null)
+                if (Request.QueryString["Action"] == "Register")
+                {
                     divregister.Visible = true;
                     if (AlowRegister == false)
                     {//如果不允许注册
@@ -51,19 +51,27 @@ namespace SoftwareVersion.Manager
 
                     }
                     LHeader.Text = $"<title>{WebTitle} - 注册</title>";
-                    break;
-                default:
-                    if (Session["User"] == null)
+                }
+                else
+                {
+                    Users usr = (Users)Session["User"];
+                    switch (Request.QueryString["Action"])
                     {
-                        divlogin.Visible = true;
-                        LHeader.Text = $"<title>{WebTitle} - 登录</title>";
-                    }
-                    else
-                    {//已经登陆过了,直接跳转到用户信息页面
+                        case "gencode":
+                            break;
+                        default:
+                            if (Session["User"] == null)
+                            {
+                                divlogin.Visible = true;
+                                LHeader.Text = $"<title>{WebTitle} - 登录</title>";
+                            }
+                            else
+                            {//已经登陆过了,直接跳转到用户信息页面
 
+                            }
+                            break;
                     }
-                    break;
-            }
+                }
         }
         protected void buttonlogin_Click(object sender, EventArgs e)
         {

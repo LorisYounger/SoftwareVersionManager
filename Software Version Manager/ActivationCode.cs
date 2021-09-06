@@ -12,7 +12,7 @@ namespace SoftwareVersion.Manager
     //   -activecode
     //     code(int64)|software(string64)|verison(int32)|Uid(int)|Expiration(datetime)|times(short)|illustration(text)|remarks(text)|Activated(text)|
     //      激活码     | 可以激活的软件名  | 可激活版本   | 用户id  |      失效日期      | 可以激活次数|       描述       |备注(给管理员)| 已激活电脑     |
-    //      随机数     |------------------| -1为不限版本 |-1未绑定 |      9999-12-30   |       5     |         空       |    空       |        空     |
+    //      随机数     |------------------| -1为不限版本 |-1未绑定 |      9999-12-30    |5 -1为不限次数|         空       |    空       |        空     |
     public class ActivationCode
     {
         #region "辅助构建函数"
@@ -124,7 +124,7 @@ namespace SoftwareVersion.Manager
             }
         }
         /// <summary>
-        /// 可激活版本
+        /// 可激活版本 -1为不限版本
         /// </summary>
         public int Verison
         {

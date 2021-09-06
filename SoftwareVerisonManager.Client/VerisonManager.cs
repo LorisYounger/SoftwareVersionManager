@@ -11,6 +11,9 @@ namespace SoftwareVersion.Client
     //     vid(int)|software(string64)|ver(int32)|verison(string32)|PublishDate|importances(sbyte)|times(int)|illustration(text)|remarks(text)|
     //     用于键控 |      软件名称    | 软件版本  | 软件版本(文本)   |  发布时间 |       重要性      |被使用次数|   更新内容   |备注(给管理员)|
     //      递增    |-------------------------------------------    |   Now    |     Default      |     0    |     空       |    空       |
+    /// <summary>
+    /// 版本码表 无需自行创建
+    /// </summary>
     public class VersionManager
     {
   
@@ -84,6 +87,9 @@ namespace SoftwareVersion.Client
                 //return state;
             }
         }
+        /// <summary>
+        /// 更新重要性
+        /// </summary>
         public enum Importance : sbyte
         {
             /// <summary>
@@ -149,6 +155,9 @@ namespace SoftwareVersion.Client
             }
         }
         #region "构造函数"
+        /// <summary>
+        /// 版本码表 无需自行创建
+        /// </summary>
         public VersionManager(Line raw)
         {
             vID = raw.InfoToInt;
