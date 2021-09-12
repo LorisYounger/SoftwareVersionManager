@@ -129,6 +129,7 @@ namespace SoftwareVersion.Client
         /// <returns>激活成功为True,否则为False</returns>
         public bool TryActivation(string code, out ActivationCode actcode, out ReturnMessage message)
         {
+            code = code.Replace("-", "").Replace(" ", "");
             actcode = null;
             message = ReturnMessage.ERROR0;
             try

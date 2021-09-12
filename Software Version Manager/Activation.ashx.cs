@@ -31,7 +31,7 @@ namespace SoftwareVersion.Manager
                 context.Response.Write("ERROR_1#1:|Computer code in need");
                 return;
             }
-            if (!int.TryParse(comp, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out int compcode))
+            if (!int.TryParse(comp, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out _))
             {
                 context.Response.Write("ERROR_1#1:|Computer code is Int");
                 return;
@@ -91,13 +91,16 @@ namespace SoftwareVersion.Manager
                         return;
                     }
                     //如果激活次数已用完
-                    if (actcode.Times != -1 && actcode.ActivatedNumber >= actcode.Times)
+                    if (actcode.Times != -1)
                     {
-                        context.Response.Write("FALSE_0#128:|Computer is Full\n" + actcode.DataBuff.ToString());
-                        return;
+                        if (actcode.ActivatedNumber >= actcode.Times)
+                        {
+                            context.Response.Write("FALSE_0#128:|Computer is Full\n" + actcode.DataBuff.ToString());
+                            return;
+                        }
+                        actcode.ActivatedADD(comp);
                     }
-                    actcode.ActivatedADD(comp);
-                    context.Response.Write("TRUE_1#56:|Active by New\n" + actcode.DataBuff.ToString());
+                    context.Response.Write("TRUE_1#65:|Active by New\n" + actcode.DataBuff.ToString());
                     return;
                 case "info":
                     context.Response.Write(actcode.DataBuff.ToString());

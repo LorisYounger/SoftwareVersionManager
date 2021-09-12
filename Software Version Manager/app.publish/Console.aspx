@@ -53,7 +53,7 @@
 <body>
     <form id="formConsole" runat="server">
         <asp:TextBox runat="server" ID="MasterKey" Style="display: none"></asp:TextBox>
-        <div id="divlogin" runat="server"  visible="false">
+        <div id="divlogin" runat="server" visible="false">
             <h1 style="text-align: center">登录</h1>
             <p id="errorboxlogin" runat="server" class="errorbox" visible="false"></p>
             <p class="BoxLable">用户名或电子邮件地址</p>
@@ -71,31 +71,58 @@
             <a href="?Action=Forget" style="text-align: right">忘记密码</a>
         </div>
         <div id="divregister" runat="server" visible="false">
-        <h1 style="text-align: center">注册</h1>
-        <p id="errorboxregister" runat="server" class="errorbox" visible="false"></p>
-        <p class="BoxLable">用户名</p>
-        <asp:TextBox runat="server" ID="usernamereg" class="singlelineinput"></asp:TextBox>
-        <p class="BoxLable">电子邮件</p>
-        <asp:TextBox runat="server" ID="emailreg" class="singlelineinput" onchange="emailregtextchange()"></asp:TextBox>
-        <p class="BoxLable">密码</p>
-        <asp:TextBox runat="server" ID="passwordreg" TextMode="Password" class="singlelineinput"></asp:TextBox>
-        <p class="BoxLable">请计算: </p>
-        <asp:Label runat="server" Text="0+0=" ID="CalregistKey"></asp:Label>
-        <asp:TextBox runat="server" ID="checkregisterkey" class="singlelineinput"></asp:TextBox>
-        <br/>
-        <div id="emailcheck" runat="server" style="display: none" visible="false">
-            <p class="BoxLable">邮箱验证码</p>
-            <button id="bottonsendregemail" style="float: right; font-size: 50%;" onclick="sendregemail()" type="button">获取验证码</button>
-            <asp:TextBox runat="server" ID="emailcode" class="singlelineinput"></asp:TextBox>
-            <br/>
-        </div>
-        <asp:Button runat="server" Text="注册" ID="buttonregister" />
-        <br />
-        <br />
-        <a href="?Action=Login">已有账户?立即登陆</a>
-        <a href="?Action=Forget" style="text-align: right">忘记密码?通过邮件找回</a>
+            <h1 style="text-align: center">注册</h1>
+            <p id="errorboxregister" runat="server" class="errorbox" visible="false"></p>
+            <p class="BoxLable">用户名</p>
+            <asp:TextBox runat="server" ID="usernamereg" class="singlelineinput"></asp:TextBox>
+            <p class="BoxLable">电子邮件</p>
+            <asp:TextBox runat="server" ID="emailreg" class="singlelineinput" onchange="emailregtextchange()"></asp:TextBox>
+            <p class="BoxLable">密码</p>
+            <asp:TextBox runat="server" ID="passwordreg" TextMode="Password" class="singlelineinput"></asp:TextBox>
+            <p class="BoxLable">请计算: </p>
+            <asp:Label runat="server" Text="0+0=" ID="CalregistKey"></asp:Label>
+            <asp:TextBox runat="server" ID="checkregisterkey" class="singlelineinput"></asp:TextBox>
+            <br />
+            <div id="emailcheck" runat="server" style="display: none" visible="false">
+                <p class="BoxLable">邮箱验证码</p>
+                <button id="bottonsendregemail" style="float: right; font-size: 50%;" onclick="sendregemail()" type="button">获取验证码</button>
+                <asp:TextBox runat="server" ID="emailcode" class="singlelineinput"></asp:TextBox>
+                <br />
+            </div>
+            <asp:Button runat="server" Text="注册" ID="buttonregister" />
+            <br />
+            <br />
+            <a href="?Action=Login">已有账户?立即登陆</a>
+            <a href="?Action=Forget" style="text-align: right">忘记密码?通过邮件找回</a>
 
-    </div>
+        </div>
+        <div id="divuser" runat="server" visible="false">
+            <h1 style="text-align: center">用户管理面板</h1>
+            <asp:TextBox ID="TextBoxOutputusr" runat="server" Width="100%" Heigh="200"></asp:TextBox>
+        </div>
+        <div id="divadmin" runat="server" visible="false">
+            <h1 style="text-align: center">管理员管理面板</h1>
+            <asp:TextBox ID="TextBoxOutput" runat="server" Width="100%" Heigh="200" Text="输出位置" ReadOnly="true"></asp:TextBox>
+            <br/><br/>
+            <h2 style="text-align: center">批量生成秘钥</h2>
+            <p class="BoxLable">软件名称</p>
+            <asp:TextBox runat="server" ID="TextBoxSoftWare" class="singlelineinput"></asp:TextBox>
+            <p class="BoxLable">可激活的版本 -1为不限版本</p>
+            <asp:TextBox runat="server" ID="TextBoxVersion" class="singlelineinput" Text="-1"></asp:TextBox>
+            <p class="BoxLable">失效日期</p>
+            <asp:TextBox runat="server" ID="TextBoxExpiration" class="singlelineinput" Text="2099/01/01"></asp:TextBox>
+            <p class="BoxLable">绑定用户id -1为不绑定</p>
+            <asp:TextBox runat="server" ID="TextBoxUserid" class="singlelineinput" Text="-1"></asp:TextBox>
+            <p class="BoxLable">可激活新电脑次数</p>
+            <asp:TextBox runat="server" ID="TextBoxTimes" class="singlelineinput" Text="5"></asp:TextBox>
+            <p class="BoxLable">描述(给用户)</p>
+            <asp:TextBox runat="server" ID="TextBoxIllustration" class="singlelineinput"></asp:TextBox>
+            <p class="BoxLable">备注(给管理员)</p>
+            <asp:TextBox runat="server" ID="TextBoxRemarks" class="singlelineinput"></asp:TextBox>
+            <p class="BoxLable">生成个数</p>
+            <asp:TextBox runat="server" ID="TextBoxGenTimes" class="singlelineinput" Text="1"></asp:TextBox>
+            <asp:Button ID="ButtonGenCore" runat="server" Text="开始生成" OnClick="ButtonGenCore_Click" />
+        </div>
     </form>
 </body>
 </html>

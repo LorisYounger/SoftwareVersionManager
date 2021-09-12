@@ -23,6 +23,8 @@ namespace SoftwareVersion.Manager
         /// <returns></returns>
         public static ActivationCode GetActivationCode(string code)
         {
+            //先除去多余文本
+            code = code.Replace("-","").Replace(" ","");
             //先将CODE转换成Long
             if (!long.TryParse(code, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out long activationCode))
             {
@@ -59,7 +61,7 @@ namespace SoftwareVersion.Manager
         /// <summary>
         /// 创建新激活码
         /// </summary>
-        public static ActivationCode CreatActivationCode(string software, int verison = -1, int uid = -1, DateTime expiration = default, short times = 5, string illustration = "", string remarks = "", string headport = "")
+        public static ActivationCode CreatActivationCode(string software, int verison = -1, int uid = -1, DateTime expiration = default, short times = 5, string illustration = "", string remarks = "")
         {
             long rndkey = RndLong();
             while (GetActivationCode(rndkey) != null)//确保没有重复的key
@@ -67,9 +69,9 @@ namespace SoftwareVersion.Manager
             if (expiration == default)
                 expiration = DateTime.MaxValue;//9999年12月31日
 
-            RAW.ExecuteNonQuery($"INSERT INTO activecode VALUES (@code,@sw,@vs,@uid,@exp,@tm,@ds,@rm,@hp)", new MySQLHelper.Parameter("code", rndkey), new MySQLHelper.Parameter("sw", software),
+            RAW.ExecuteNonQuery($"INSERT INTO activecode VALUES (@code,@sw,@vs,@uid,@exp,@tm,@ds,@rm,\"\")", new MySQLHelper.Parameter("code", rndkey), new MySQLHelper.Parameter("sw", software),
                 new MySQLHelper.Parameter("vs", verison), new MySQLHelper.Parameter("uid", uid), new MySQLHelper.Parameter("exp", expiration), new MySQLHelper.Parameter("tm", times),
-                new MySQLHelper.Parameter("ds", illustration), new MySQLHelper.Parameter("rm", remarks), new MySQLHelper.Parameter("hp", headport));
+                new MySQLHelper.Parameter("ds", illustration), new MySQLHelper.Parameter("rm", remarks));
             return GetActivationCode(rndkey);
         }
         #endregion
@@ -275,7 +277,7 @@ namespace SoftwareVersion.Manager
         public ActivationCode(long code, Line bf)
         {
             Code = code;
-            CodeHEX = Code.ToString("X");
+            CodeHEX = Code.ToString("X").Insert(12,"-").Insert(8, "-").Insert(4, "-");            
             databf = bf;
         }
         #endregion

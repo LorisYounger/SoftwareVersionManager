@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -33,45 +34,49 @@ namespace SoftwareVersion.Manager
             }
 
             CalloginKey.Text = qus;
-            if (Session["User"] == null)
-                if (Request.QueryString["Action"] == "Register")
+            if (Request.QueryString["Action"] == "Register")
+            {
+                divregister.Visible = true;
+                if (AlowRegister == false)
+                {//如果不允许注册
+                    errorboxregister.Visible = true;
+                    errorboxregister.InnerHtml = "当前网站未开放注册,如需注册请联系网站管理员<br/>如已有账户,请<a href=\"?Action=Login\">前往登陆</a>";
+                    buttonregister.Enabled = false;
+                    CalregistKey.Enabled = false;
+                    passwordreg.Enabled = false;
+                }
+                else if (EnabledEmail)
                 {
-                    divregister.Visible = true;
-                    if (AlowRegister == false)
-                    {//如果不允许注册
-                        errorboxregister.Visible = true;
-                        errorboxregister.InnerHtml = "当前网站未开放注册,如需注册请联系网站管理员<br/>如已有账户,请<a href=\"?Action=Login\">前往登陆</a>";
-                        buttonregister.Enabled = false;
-                        CalregistKey.Enabled = false;
-                        passwordreg.Enabled = false;
-                    }
-                    else if (EnabledEmail)
-                    {
-                        emailcheck.Visible = true;//只有开启发送邮件功能,会发送验证码
+                    emailcheck.Visible = true;//只有开启发送邮件功能,会发送验证码
 
-                    }
-                    LHeader.Text = $"<title>{WebTitle} - 注册</title>";
+                }
+                LHeader.Text = $"<title>{WebTitle} - 注册</title>";
+            }
+            else
+            {
+                //switch (Request.QueryString["Action"])
+                //{
+                //    case "gencode":
+                //        break;
+                //    default:
+                if (Session["User"] == null)
+                {
+                    divlogin.Visible = true;
+                    LHeader.Text = $"<title>{WebTitle} - 登录</title>";
                 }
                 else
-                {
+                {//已经登陆过了,直接跳转到用户信息页面
+                    LHeader.Text = $"<title>{WebTitle} - 用户登陆</title>";
                     Users usr = (Users)Session["User"];
-                    switch (Request.QueryString["Action"])
+                    divuser.Visible = true;
+                    if (usr.Authority == AuthLevel.Admin)
                     {
-                        case "gencode":
-                            break;
-                        default:
-                            if (Session["User"] == null)
-                            {
-                                divlogin.Visible = true;
-                                LHeader.Text = $"<title>{WebTitle} - 登录</title>";
-                            }
-                            else
-                            {//已经登陆过了,直接跳转到用户信息页面
-
-                            }
-                            break;
+                        divadmin.Visible = true;
                     }
                 }
+                //        break;
+                //}
+            }
         }
         protected void buttonlogin_Click(object sender, EventArgs e)
         {
@@ -176,6 +181,60 @@ namespace SoftwareVersion.Manager
                 errorboxlogin.Visible = true;
                 errorboxlogin.InnerText = "验证码为纯数字,请检查输入";
             }
+        }
+
+        protected void ButtonGenCore_Click(object sender, EventArgs e)
+        {
+            if (Session["User"] == null)
+            {//用户缓存无了,退出刷新
+                Response.Redirect(Request.Url.ToString());
+                Response.End();
+                return;
+            }
+            Users usr = (Users)Session["User"];
+            if (usr.Authority != AuthLevel.Admin)
+            {
+                Response.Redirect(Request.Url.ToString());
+                Response.End();
+                return;
+            }
+            if (TextBoxSoftWare.Text == "")
+            {
+                TextBoxOutput.Text = "ERROR: No SoftwareName";
+                return;
+            }
+            string software = TextBoxSoftWare.Text;
+            if (!int.TryParse(TextBoxGenTimes.Text, out int gentimes))
+            {
+                TextBoxOutput.Text = "ERROR: Gen Times Must be Int";
+                return;
+            }
+            if (!short.TryParse(TextBoxTimes.Text, out short times))
+            {
+                TextBoxOutput.Text = "ERROR: Times Must be short";
+                return;
+            }
+            if (!int.TryParse(TextBoxUserid.Text, out int uid))
+            {
+                TextBoxOutput.Text = "ERROR: Uid Must be Int";
+                return;
+            }
+            if (!int.TryParse(TextBoxVersion.Text, out int ver))
+            {
+                TextBoxOutput.Text = "ERROR: Version Must be Int";
+                return;
+            }
+            if (!DateTime.TryParse(TextBoxExpiration.Text, out DateTime exp))
+            {
+                TextBoxOutput.Text = "ERROR: Expiration Date Must be DateTime";
+                return;
+            }
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < gentimes; i++)
+            {
+                sb.AppendLine(ActivationCode.CreatActivationCode(software, ver, uid, exp, times, TextBoxIllustration.Text, TextBoxRemarks.Text).CodeHEX);
+            }
+            TextBoxOutput.Text = sb.ToString();
         }
     }
 }
