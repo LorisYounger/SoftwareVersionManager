@@ -46,7 +46,7 @@ namespace SoftwareVersion.Client
             Version = version;
             try
             {
-                System.IO.Stream stream = System.Net.WebRequest.Create($"{SVMURL}/Verison.ashx?soft={SoftWare}&type=lps").GetResponse().GetResponseStream();
+                System.IO.Stream stream = System.Net.WebRequest.Create($"{SVMURL}/Verison.ashx?soft={SoftWare}&type=lps&ver={version}").GetResponse().GetResponseStream();
                 StreamReader sr = new StreamReader(stream, System.Text.Encoding.UTF8);
                 string ReadText = sr.ReadToEnd(); //由于这里并非读取全部文件，这里正常为空
                 sr.Dispose(); //关闭流

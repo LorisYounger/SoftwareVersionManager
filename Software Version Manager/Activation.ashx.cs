@@ -64,7 +64,7 @@ namespace SoftwareVersion.Manager
             {
                 case "active":
                     //检查激活和软件是否一致
-                    if (actcode.Software.Split(',').Contains(soft))
+                    if (!actcode.Software.Split(',').Contains(soft))
                     {
                         context.Response.Write("FALSE_3#131:|Not This SoftWare\n" + actcode.DataBuff.ToString());
                         return;

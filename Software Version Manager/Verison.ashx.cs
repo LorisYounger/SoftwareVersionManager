@@ -27,7 +27,17 @@ namespace SoftwareVersion.Manager
                 context.Response.Write("No Software Found");
                 return;
             }
-            
+
+            //为当前软件使用次数+1
+            if (int.TryParse(context.Request.QueryString["ver"], out int ver))
+            {
+                var vm = vlist.Find(x => x.Ver == ver);
+                if (vm != null)
+                {
+                    vm.Times++;
+                }
+            }
+
             string type = context.Request.QueryString["type"];
             if (type == null)
                 type = "plain";
@@ -37,7 +47,7 @@ namespace SoftwareVersion.Manager
                 case "raw":
                     foreach (var v in vlist)
                     {
-                        context.Response.Write(v.DataBuff.ToString()+'\n');
+                        context.Response.Write(v.DataBuff.ToString() + '\n');
                     }
                     break;
                 default:

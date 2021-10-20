@@ -63,7 +63,7 @@ namespace SoftwareVersion.Manager
         /// </summary>
         public Line Data
         {
-            get => RAWUser.ExecuteQuery("SELECT * FROM verisonmanager WHERE Vid=@vid", new MySQLHelper.Parameter("vid", vID)).First();
+            get => RAW.ExecuteQuery("SELECT * FROM verisonmanager WHERE Vid=@vid", new MySQLHelper.Parameter("vid", vID)).First();
             //之所以没有个 data进行缓存是 user数据蛮重要的 不能缓存 也不需要 或许以后的文章数据可以加上缓存
 
             //没有set是因为这是操作整个行 ToDO
