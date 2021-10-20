@@ -188,18 +188,39 @@ namespace SoftwareVersion.Client
         public static int GetComputerHash()
         {
             int hash = 0;
-            foreach (ManagementBaseObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_Processor").Get())
+            try
             {
-                hash += ((string)obj["Processorid"]).GetHashCode();
+                foreach (ManagementBaseObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_Processor").Get())
+                {
+                    if (obj["Processorid"] != null)
+                        hash += ((string)obj["Processorid"]).GetHashCode();
+                    if (obj["UniqueId"] != null)
+                        hash += ((string)obj["UniqueId"]).GetHashCode();
+                }
             }
-            foreach (ManagementBaseObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory").Get())
+            catch { }
+            try
             {
-                hash += ((string)obj["PartNumber"]).GetHashCode();
+                foreach (ManagementBaseObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory").Get())
+                {
+                    if (obj["PartNumber"] != null)
+                        hash += ((string)obj["PartNumber"]).GetHashCode();
+                }
             }
-            foreach (ManagementBaseObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_LogicalDisk").Get())
+            catch { }
+            try
             {
-                hash += ((string)obj["VolumeSerialNumber"]).GetHashCode();
+                foreach (ManagementBaseObject obj in new ManagementObjectSearcher("SELECT * FROM Win32_LogicalDisk").Get())
+                {
+                    if (obj["VolumeSerialNumber"] != null)
+                        hash += ((string)obj["VolumeSerialNumber"]).GetHashCode();
+                }
             }
+            catch { }
+            //if (hash == 0)
+            //{
+            //    return Guid.NewGuid().ToString("N").GetHashCode();
+            //}
             return hash;
         }
         /// <summary>
