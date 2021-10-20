@@ -27,7 +27,7 @@ namespace SoftwareVersion.Manager
                 context.Response.Write("No Software Found");
                 return;
             }
-
+            
             string type = context.Request.QueryString["type"];
             if (type == null)
                 type = "plain";
@@ -42,7 +42,7 @@ namespace SoftwareVersion.Manager
                     break;
                 default:
                 case "view":
-                    //一个更好看的界面
+                    //TODO一个更好看的界面
                     break;
                 case "plain":
                     foreach (var v in vlist)

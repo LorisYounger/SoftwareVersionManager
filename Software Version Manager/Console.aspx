@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Console.aspx.cs" Inherits="SoftwareVersion.Manager.Console" %>
+﻿<%@ page language="C#" autoeventwireup="true" codebehind="Console.aspx.cs" inherits="SoftwareVersion.Manager.Console" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,7 +20,19 @@
             border: 1px solid #ccd0d4;
             box-shadow: 0 1px 3px rgba(0,0,0,.04);
         }
-
+         .CenterDisplay {
+            margin-top: 20px;
+            margin-left: 0;
+            margin-bottom: 20px;
+            padding: 26px 24px 46px;
+            font-weight: 400;
+            overflow: hidden;
+            background: #fff;
+            margin: auto;
+            width: 80%;
+            border: 1px solid #ccd0d4;
+            box-shadow: 0 1px 3px rgba(0,0,0,.04);
+        }
         .errorbox {
             background: #e53935;
             color: #ffebee;
@@ -53,7 +65,7 @@
 <body>
     <form id="formConsole" runat="server">
         <asp:TextBox runat="server" ID="MasterKey" Style="display: none"></asp:TextBox>
-        <div id="divlogin" runat="server" visible="false">
+        <div id="divlogin" runat="server" visible="false" class="CenterBox">
             <h1 style="text-align: center">登录</h1>
             <p id="errorboxlogin" runat="server" class="errorbox" visible="false"></p>
             <p class="BoxLable">用户名或电子邮件地址</p>
@@ -70,7 +82,7 @@
             <a href="?Action=Register">获得账户</a>
             <a href="?Action=Forget" style="text-align: right">忘记密码</a>
         </div>
-        <div id="divregister" runat="server" visible="false">
+        <div id="divregister" runat="server" visible="false" class="CenterBox">
             <h1 style="text-align: center">注册</h1>
             <p id="errorboxregister" runat="server" class="errorbox" visible="false"></p>
             <p class="BoxLable">用户名</p>
@@ -96,21 +108,22 @@
             <a href="?Action=Forget" style="text-align: right">忘记密码?通过邮件找回</a>
 
         </div>
-        <div id="divuser" runat="server" visible="false">
+        <div id="divuser" runat="server" visible="false" class="CenterDisplay">
             <h1 style="text-align: center">用户管理面板</h1>
-            <asp:TextBox ID="TextBoxOutputusr" runat="server" Width="100%" Heigh="200"></asp:TextBox>
+            <asp:TextBox ID="TextBoxOutputusr" runat="server" Width="100%" Heigh="200" TextMode="MultiLine" ReadOnly="true"></asp:TextBox>
         </div>
-        <div id="divadmin" runat="server" visible="false">
+        <div id="divadmin" runat="server" visible="false" class="CenterDisplay">
             <h1 style="text-align: center">管理员管理面板</h1>
-            <asp:TextBox ID="TextBoxOutput" runat="server" Width="100%" Heigh="200" Text="输出位置" ReadOnly="true"></asp:TextBox>
-            <br/><br/>
+            <asp:TextBox ID="TextBoxOutput" runat="server" Width="100%" Heigh="400" Text="输出位置" ReadOnly="true" TextMode="MultiLine"></asp:TextBox>
+            <br />
+            <br />
             <h2 style="text-align: center">批量生成秘钥</h2>
-            <p class="BoxLable">软件名称</p>
+            <p class="BoxLable">软件名称 多个软件以','隔开</p>
             <asp:TextBox runat="server" ID="TextBoxSoftWare" class="singlelineinput"></asp:TextBox>
             <p class="BoxLable">可激活的版本 -1为不限版本</p>
             <asp:TextBox runat="server" ID="TextBoxVersion" class="singlelineinput" Text="-1"></asp:TextBox>
             <p class="BoxLable">失效日期</p>
-            <asp:TextBox runat="server" ID="TextBoxExpiration" class="singlelineinput" Text="2099/01/01"></asp:TextBox>
+            <asp:TextBox runat="server" ID="TextBoxExpiration" class="singlelineinput" Text="2099/01/01" TextMode="DateTime"></asp:TextBox>
             <p class="BoxLable">绑定用户id -1为不绑定</p>
             <asp:TextBox runat="server" ID="TextBoxUserid" class="singlelineinput" Text="-1"></asp:TextBox>
             <p class="BoxLable">可激活新电脑次数</p>

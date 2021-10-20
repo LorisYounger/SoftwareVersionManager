@@ -16,7 +16,7 @@ INSERT INTO `users` (`Uid`, `name`, `email`, `password`, `isroot`, `money`, `exp
 #--------------------------------------------
 
 #创建激活表
-CREATE TABLE `activecode` ( `code` BIGINT NOT NULL COMMENT '激活码' , `software` VARCHAR(64) NOT NULL COMMENT '可以激活的软件名' , `verison` INT NOT NULL DEFAULT '-1' COMMENT '可激活版本' , `uid` INT NULL DEFAULT '-1' COMMENT '用户id' , `expiration` DATETIME NOT NULL COMMENT '失效日期' , `times` SMALLINT NOT NULL COMMENT '可以激活次数' , `illustration` TEXT NOT NULL COMMENT '描述' , `remarks` TEXT NOT NULL COMMENT '备注(给管理员)' , `activated` TEXT NOT NULL COMMENT '已激活电脑' , PRIMARY KEY (`code`), INDEX(`uid`)) ENGINE = InnoDB COMMENT = '激活码表';
+CREATE TABLE `activecode` ( `code` BIGINT NOT NULL COMMENT '激活码' , `software` VARCHAR(256) NOT NULL COMMENT '可以激活的软件名' , `verison` INT NOT NULL DEFAULT '-1' COMMENT '可激活版本' , `uid` INT NULL DEFAULT '-1' COMMENT '用户id' , `expiration` DATETIME NOT NULL COMMENT '失效日期' , `times` SMALLINT NOT NULL COMMENT '可以激活次数' , `illustration` TEXT NOT NULL COMMENT '描述' , `remarks` TEXT NOT NULL COMMENT '备注(给管理员)' , `activated` TEXT NOT NULL COMMENT '已激活电脑' , PRIMARY KEY (`code`), INDEX(`uid`)) ENGINE = InnoDB COMMENT = '激活码表';
 
 #创建版本表
 CREATE TABLE `verisonmanager` ( `Vid` INT NOT NULL AUTO_INCREMENT COMMENT '用于键控' , `software` VARCHAR(64) NOT NULL COMMENT '软件名称' , `ver` INT NOT NULL COMMENT '软件版本' , `verison` VARCHAR(32) NOT NULL COMMENT '软件版本(文本)' , `publishdate` DATETIME NOT NULL COMMENT '发布时间' , `importances` TINYINT NOT NULL COMMENT '重要性' , `times` INT NOT NULL COMMENT '被使用次数' , `illustration` TEXT NOT NULL COMMENT '更新内容' , `remarks` TEXT NOT NULL COMMENT '备注(给管理员)' , PRIMARY KEY (`Vid`), INDEX (`software`)) ENGINE = InnoDB;

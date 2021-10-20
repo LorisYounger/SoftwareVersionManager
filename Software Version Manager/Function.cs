@@ -110,6 +110,8 @@ namespace SoftwareVersion.Manager
             //Max:9223372036854775807
             byte[] salt = new byte[8];
             Rnd.NextBytes(salt);
+            //if (salt[7] < 16)
+            //    salt[7] = 16;
             return BitConverter.ToInt64(salt, 0);
         }
         /// <summary>

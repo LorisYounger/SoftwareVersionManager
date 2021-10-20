@@ -24,7 +24,7 @@ namespace SoftwareVersion.Manager
         public static ActivationCode GetActivationCode(string code)
         {
             //先除去多余文本
-            code = code.Replace("-","").Replace(" ","");
+            code = code.Replace("-", "").Replace(" ", "");
             //先将CODE转换成Long
             if (!long.TryParse(code, System.Globalization.NumberStyles.HexNumber, System.Globalization.CultureInfo.InvariantCulture, out long activationCode))
             {
@@ -265,19 +265,19 @@ namespace SoftwareVersion.Manager
         public void ActivatedRemove(string computer)
         {
             if (!string.IsNullOrEmpty(Activated))
-                Activated = Activated.Replace(computer,"").Replace(",,",",").Trim(',');
+                Activated = Activated.Replace(computer, "").Replace(",,", ",").Trim(',');
         }
 
         #region 构造函数
         public ActivationCode(long code)
         {
             Code = code;
-            CodeHEX = Code.ToString("X");
+            CodeHEX = Code.ToString("X").PadLeft(16, '0').Insert(12, "-").Insert(8, "-").Insert(4, "-");
         }
         public ActivationCode(long code, Line bf)
         {
             Code = code;
-            CodeHEX = Code.ToString("X").Insert(12,"-").Insert(8, "-").Insert(4, "-");            
+            CodeHEX = Code.ToString("X").PadLeft(16, '0').Insert(12, "-").Insert(8, "-").Insert(4, "-");
             databf = bf;
         }
         #endregion
