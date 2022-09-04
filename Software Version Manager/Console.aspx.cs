@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Web;
 using System.Web.UI;
@@ -232,7 +233,7 @@ namespace SoftwareVersion.Manager
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < gentimes; i++)
             {
-                sb.AppendLine(ActivationCode.CreatActivationCode(software, ver, uid, exp, times, TextBoxIllustration.Text, TextBoxRemarks.Text).CodeHEX);
+                sb.AppendLine(ActivationCode.CreatActivationCode(software, ver, uid, exp, times, TextBoxIllustration.Text ?? "", usr.UserName + ':' + TextBoxRemarks.Text ?? "").CodeHEX);
             }
             TextBoxOutput.Text = sb.ToString();
         }

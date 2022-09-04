@@ -52,5 +52,62 @@ Install-Package SoftwareVersion.Client
 
    https://www.nuget.org/packages/SoftwareVersion.Client/
 
+## SoftwareVerison.Manager 网页API
 
+通过网页API,可以让其他网站接入并执行生成秘钥等操作
 
+API链接为  [API.ashx](https://github.com/LorisYounger/SoftwareVersionManager/blob/main/Software%20Version%20Manager/API.cs)
+
+### 基本参数
+
+#### usr
+
+用户名
+
+#### pas
+
+用户密码
+
+#### action
+
+功能选择,目前有以下几种功能
+
+* create	创建新秘钥
+
+### 功能:创建新秘钥
+
+创建并返回新秘钥,该功能需有管理员权限
+
+#### soft
+
+软件名称, 多个软件以','隔开 支持激活多个程序
+
+#### times
+
+可激活新电脑次数, *默认5次*
+
+#### uid
+
+绑定用户id -1为不绑定 *默认为-1*
+
+#### ver
+
+可激活的版本 -1为不限版本 *默认为-1*
+
+#### exp
+
+失效日期 在此日期后激活码失效 *默认为2099/01/01*
+
+#### ill
+
+描述(给用户)
+
+#### mark
+
+备注(给管理员)
+
+### 示例
+
+```
+api.ashx?usr=admin&pas=password&action=create&soft=myapp&mark=API测试
+```
