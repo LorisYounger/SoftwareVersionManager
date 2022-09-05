@@ -1,4 +1,4 @@
-﻿<%@ page language="C#" autoeventwireup="true" codebehind="Console.aspx.cs" inherits="SoftwareVersion.Manager.Console" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Console.aspx.cs" Inherits="SoftwareVersion.Manager.Console" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -20,7 +20,8 @@
             border: 1px solid #ccd0d4;
             box-shadow: 0 1px 3px rgba(0,0,0,.04);
         }
-         .CenterDisplay {
+
+        .CenterDisplay {
             margin-top: 20px;
             margin-left: 0;
             margin-bottom: 20px;
@@ -33,6 +34,7 @@
             border: 1px solid #ccd0d4;
             box-shadow: 0 1px 3px rgba(0,0,0,.04);
         }
+
         .errorbox {
             background: #e53935;
             color: #ffebee;
@@ -116,25 +118,38 @@
             <h1 style="text-align: center">管理员管理面板</h1>
             <asp:TextBox ID="TextBoxOutput" runat="server" Width="100%" Heigh="400" Text="输出位置" ReadOnly="true" TextMode="MultiLine"></asp:TextBox>
             <br />
+            <asp:Button ID="Buttongenkey" runat="server" Text="批量生成秘钥" OnClick="Buttongenkey_Click" />
+            <asp:Button ID="Buttonrelskey" runat="server" Text="批量清理秘钥激活次数" OnClick="Buttonrelskey_Click" />
             <br />
-            <h2 style="text-align: center">批量生成秘钥</h2>
-            <p class="BoxLable">软件名称 多个软件以','隔开</p>
-            <asp:TextBox runat="server" ID="TextBoxSoftWare" class="singlelineinput"></asp:TextBox>
-            <p class="BoxLable">可激活的版本 -1为不限版本</p>
-            <asp:TextBox runat="server" ID="TextBoxVersion" class="singlelineinput" Text="-1"></asp:TextBox>
-            <p class="BoxLable">失效日期</p>
-            <asp:TextBox runat="server" ID="TextBoxExpiration" class="singlelineinput" Text="2099/01/01" TextMode="DateTime"></asp:TextBox>
-            <p class="BoxLable">绑定用户id -1为不绑定</p>
-            <asp:TextBox runat="server" ID="TextBoxUserid" class="singlelineinput" Text="-1"></asp:TextBox>
-            <p class="BoxLable">可激活新电脑次数</p>
-            <asp:TextBox runat="server" ID="TextBoxTimes" class="singlelineinput" Text="5"></asp:TextBox>
-            <p class="BoxLable">描述(给用户)</p>
-            <asp:TextBox runat="server" ID="TextBoxIllustration" class="singlelineinput"></asp:TextBox>
-            <p class="BoxLable">备注(给管理员)</p>
-            <asp:TextBox runat="server" ID="TextBoxRemarks" class="singlelineinput"></asp:TextBox>
-            <p class="BoxLable">生成个数</p>
-            <asp:TextBox runat="server" ID="TextBoxGenTimes" class="singlelineinput" Text="1"></asp:TextBox>
-            <asp:Button ID="ButtonGenCore" runat="server" Text="开始生成" OnClick="ButtonGenCore_Click" />
+            <br />
+            <div id="divadmingenkey" runat="server" visible="false">
+                <h2 style="text-align: center">批量生成秘钥</h2>
+                <p class="BoxLable">软件名称 多个软件以','隔开</p>
+                <asp:TextBox runat="server" ID="TextBoxSoftWare" class="singlelineinput"></asp:TextBox>
+                <p class="BoxLable">可激活的版本 -1为不限版本</p>
+                <asp:TextBox runat="server" ID="TextBoxVersion" class="singlelineinput" Text="-1"></asp:TextBox>
+                <p class="BoxLable">失效日期</p>
+                <asp:TextBox runat="server" ID="TextBoxExpiration" class="singlelineinput" Text="2099/01/01" TextMode="DateTime"></asp:TextBox>
+                <p class="BoxLable">绑定用户id -1为不绑定</p>
+                <asp:TextBox runat="server" ID="TextBoxUserid" class="singlelineinput" Text="-1"></asp:TextBox>
+                <p class="BoxLable">可激活新电脑次数</p>
+                <asp:TextBox runat="server" ID="TextBoxTimes" class="singlelineinput" Text="5"></asp:TextBox>
+                <p class="BoxLable">描述(给用户)</p>
+                <asp:TextBox runat="server" ID="TextBoxIllustration" class="singlelineinput"></asp:TextBox>
+                <p class="BoxLable">备注(给管理员)</p>
+                <asp:TextBox runat="server" ID="TextBoxRemarks" class="singlelineinput"></asp:TextBox>
+                <p class="BoxLable">生成个数</p>
+                <asp:TextBox runat="server" ID="TextBoxGenTimes" class="singlelineinput" Text="1"></asp:TextBox>
+                <asp:Button ID="ButtonGenCore" runat="server" Text="开始生成" OnClick="ButtonGenCore_Click" />
+            </div>
+            <div runat="server" visible="false" id="divadminrelskey">
+                <h2 style="text-align: center">批量清理秘钥激活次数</h2>
+                <p class="BoxLable">需要清理秘钥激活次数的秘钥,换行</p>
+                <asp:TextBox runat="server" ID="TextBoxrelskey" class="singlelineinput" TextMode="MultiLine"></asp:TextBox>
+                <p class="BoxLable">备注(给管理员)</p>
+                <asp:TextBox runat="server" ID="TextBoxrelsremark" class="singlelineinput"></asp:TextBox>
+                <asp:Button ID="ButtonCleanKey" runat="server" Text="清理秘钥激活次数" OnClick="ButtonCleanKey_Click" />
+            </div>
         </div>
     </form>
 </body>

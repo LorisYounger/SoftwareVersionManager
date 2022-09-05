@@ -237,5 +237,44 @@ namespace SoftwareVersion.Manager
             }
             TextBoxOutput.Text = sb.ToString();
         }
+
+
+        protected void Buttongenkey_Click(object sender, EventArgs e)
+        {
+            divadmingenkey.Visible = true;
+            divadminrelskey.Visible = false;
+        }
+
+        protected void Buttonrelskey_Click(object sender, EventArgs e)
+        {
+            divadmingenkey.Visible = false;
+            divadminrelskey.Visible = true;
+        }
+
+        protected void ButtonCleanKey_Click(object sender, EventArgs e)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (string str in TextBoxrelskey.Text.Split('\n'))
+            {
+                sb.AppendLine(RelsKey(str, TextBoxrelsremark.Text));
+            }
+        }
+        private string RelsKey(string key, string remark = null)
+        {
+            if (string.IsNullOrEmpty(key))
+            {
+                return "";
+            }
+            //开始找代码
+            ActivationCode actcode = ActivationCode.GetActivationCode(key);
+            if (actcode == null)
+            {
+                return $"{key}:|ERROR_2#2:|Code No Find or Error Code";
+            }
+            actcode.Activated = "";
+            if (string.IsNullOrEmpty(remark))
+                actcode.Remarks = remark;
+            return $"{key}:|SUCCESS:|";
+        }
     }
 }

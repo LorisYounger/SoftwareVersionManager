@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareVersion.Manager", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareVersion.Client", "SoftwareVerisonManager.Client\SoftwareVersion.Client.csproj", "{EEB1F630-3DDC-4437-92AF-8CF5AFD246E3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftwareVerison.Client.Core", "SoftwareVerison.Client.Core\SoftwareVerison.Client.Core.csproj", "{A6F9F2BD-6710-4C24-AD4D-AC1D80AA3A6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EEB1F630-3DDC-4437-92AF-8CF5AFD246E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EEB1F630-3DDC-4437-92AF-8CF5AFD246E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EEB1F630-3DDC-4437-92AF-8CF5AFD246E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6F9F2BD-6710-4C24-AD4D-AC1D80AA3A6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6F9F2BD-6710-4C24-AD4D-AC1D80AA3A6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6F9F2BD-6710-4C24-AD4D-AC1D80AA3A6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6F9F2BD-6710-4C24-AD4D-AC1D80AA3A6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

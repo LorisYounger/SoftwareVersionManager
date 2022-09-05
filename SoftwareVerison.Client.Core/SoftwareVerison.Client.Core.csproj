@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <AssemblyName>SoftwareVersion.Client</AssemblyName>
+    <RootNamespace>SoftwareVersion.Client</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="LinePutScript" Version="1.3.4" />
+  </ItemGroup>
+
+</Project>
