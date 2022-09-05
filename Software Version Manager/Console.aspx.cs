@@ -253,18 +253,27 @@ namespace SoftwareVersion.Manager
 
         protected void ButtonCleanKey_Click(object sender, EventArgs e)
         {
+            if (Session["User"] == null)
+            {//用户缓存无了,退出刷新
+                Response.Redirect(Request.Url.ToString());
+                Response.End();
+                return;
+            }
+            Users usr = (Users)Session["User"];
+            if (usr.Authority != AuthLevel.Admin)
+            {
+                Response.Redirect(Request.Url.ToString());
+                Response.End();
+                return;
+            }
             StringBuilder sb = new StringBuilder();
             foreach (string str in TextBoxrelskey.Text.Split('\n'))
             {
-                sb.AppendLine(RelsKey(str, TextBoxrelsremark.Text));
+                sb.AppendLine(RelsKey(str, usr.UserName, TextBoxrelsremark.Text));
             }
         }
-        private string RelsKey(string key, string remark = null)
+        private string RelsKey(string key, string username, string remark = null)
         {
-            if (string.IsNullOrEmpty(key))
-            {
-                return "";
-            }
             //开始找代码
             ActivationCode actcode = ActivationCode.GetActivationCode(key);
             if (actcode == null)
@@ -273,7 +282,7 @@ namespace SoftwareVersion.Manager
             }
             actcode.Activated = "";
             if (string.IsNullOrEmpty(remark))
-                actcode.Remarks = remark;
+                actcode.Remarks += $"\nre_{username}:" + remark;
             return $"{key}:|SUCCESS:|";
         }
     }
