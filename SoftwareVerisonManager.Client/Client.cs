@@ -77,7 +77,7 @@ namespace SoftwareVersion.Client
             StringBuilder sb = new StringBuilder();
             foreach (VersionManager v in Versions)
             {
-                if (v.Importances != VersionManager.Importance.Delete)
+                if (v.Importances != VersionManager.Importance.Delete && v.Ver > Version)                
                 {
                     if (((byte)v.Importances) > ((byte)importance))
                         importance = v.Importances;

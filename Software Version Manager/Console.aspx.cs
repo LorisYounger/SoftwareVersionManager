@@ -271,6 +271,7 @@ namespace SoftwareVersion.Manager
             {
                 sb.AppendLine(RelsKey(str, usr.UserName, TextBoxrelsremark.Text));
             }
+            TextBoxOutput.Text = sb.ToString();
         }
         private string RelsKey(string key, string username, string remark = null)
         {
