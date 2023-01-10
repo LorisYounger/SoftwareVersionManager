@@ -33,8 +33,8 @@
     <DocumentationFile>bin\Release\SoftwareVersion.Client.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LinePutScript, Version=1.1.4.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\LinePutScript.1.1.7\lib\net40\LinePutScript.dll</HintPath>
+    <Reference Include="LinePutScript, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\LinePutScript.1.6.1\lib\net462\LinePutScript.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
